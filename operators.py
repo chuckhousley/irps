@@ -6,11 +6,11 @@ __author__ = 'Chuck'
 def winner(a, b):
     if a == b:
         return a
-    if (a == 'r' and b == 'p') or (a == 'p' and b == 'r'):
+    if (a, b).count('r') and (a, b).count('p'):
         return 'p'
-    if (a == 'p' and b == 's') or (a == 's' and b == 'p'):
+    if (a, b).count('p') and (a, b).count('s'):
         return 's'
-    if (a == 'r' and b == 's') or (a == 's' and b == 'r'):
+    if (a, b).count('r') and (a, b).count('s'):
         return 'r'
 
 
@@ -19,11 +19,11 @@ def winner(a, b):
 def loser(a, b):
     if a == b:
         return a
-    if (a == 'r' and b == 'p') or (a == 'p' and b == 'r'):
+    if (a, b).count('r') and (a, b).count('p'):
         return 'r'
-    if (a == 'p' and b == 's') or (a == 's' and b == 'p'):
+    if (a, b).count('p') and (a, b).count('s'):
         return 'p'
-    if (a == 'r' and b == 's') or (a == 's' and b == 'r'):
+    if (a, b).count('r') and (a, b).count('s'):
         return 's'
 
 
@@ -37,9 +37,9 @@ def other(a, b):
         return 's'
     if a == b == 's':
         return 'r'
-    if (a == 'r' and b == 'p') or (a == 'p' and b == 'r'):
+    if (a, b).count('r') and (a, b).count('p'):
         return 's'
-    if (a == 'p' and b == 's') or (a == 's' and b == 'p'):
+    if (a, b).count('p') and (a, b).count('s'):
         return 'r'
-    if (a == 'r' and b == 's') or (a == 's' and b == 'r'):
+    if (a, b).count('r') and (a, b).count('s'):
         return 'p'
