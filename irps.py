@@ -2,7 +2,15 @@ __author__ = 'Chuck'
 from sys import argv
 import glb as g
 from log import prepare_log
-from operators import winner
+from generate import *
+
+# todo generate strategy trees
+# todo make function to return value from list from string input
+# todo log and solution files
+# todo read in csv file
+# todo opponent strategies
+# todo operations on agent memory list
+# todo add gt to specific log file
 
 
 def main():
