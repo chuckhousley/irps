@@ -1,4 +1,5 @@
 __author__ = 'Chuck'
+import glb
 
 
 # returns the winner of two inputs, the winner is based on the payoff matrix.
@@ -6,12 +7,7 @@ __author__ = 'Chuck'
 def winner(a, b):
     if a == b:
         return a
-    if (a, b).count('r') and (a, b).count('p'):
-        return 'p'
-    if (a, b).count('p') and (a, b).count('s'):
-        return 's'
-    if (a, b).count('r') and (a, b).count('s'):
-        return 'r'
+    return a if glb.payoff['{0}_{1}'.format(a, b)] > 0 else b
 
 
 # returns the loser of two inputs, the loser is based on the payoff matrix
@@ -19,12 +15,7 @@ def winner(a, b):
 def loser(a, b):
     if a == b:
         return a
-    if (a, b).count('r') and (a, b).count('p'):
-        return 'r'
-    if (a, b).count('p') and (a, b).count('s'):
-        return 'p'
-    if (a, b).count('r') and (a, b).count('s'):
-        return 's'
+    return a if glb.payoff['{0}_{1}'.format(a, b)] < 0 else b
 
 
 # returns the input choice that is neither of the two inputs

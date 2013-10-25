@@ -1,5 +1,5 @@
 __author__ = 'Chuck'
-from random import randint
+from random import Random, randint
 from sys import maxint
 
 
@@ -15,17 +15,21 @@ def init(cfg):
     global k
     global d
     global seed
+    global rand
     global log
+    global log_name
     global soln
     global payoff
 
     o_strat = None
     runs = None
+    rand = None
     l = None
     k = None
     d = None
     seed = None
     log = None
+    log_name = None
     soln = None
     payoff = dict()
 
@@ -76,27 +80,30 @@ def init(cfg):
                 print 'seed'
                 error()
         elif line[0] == 'log':
-            log = line[1]
+            log_name = line[1]
         elif line[0] == 'soln':
             soln = line[1]
 
         # I'm just going to assume the matrix is correctly formatted
         elif line[0] == 'R':
             rock = line[1].split('|')
-            payoff['r_win'] = int(rock[1])
-            payoff['r_tie'] = int(rock[0])
-            payoff['r_lose'] = int(rock[2])
+            payoff['r_r'] = int(rock[0])
+            payoff['p_r'] = int(rock[1])
+            payoff['s_r'] = int(rock[2])
         elif line[0] == 'P':
             paper = line[1].split('|')
-            payoff['p_win'] = int(paper[2])
-            payoff['p_tie'] = int(paper[1])
-            payoff['p_lose'] = int(paper[0])
+            payoff['r_p'] = int(paper[0])
+            payoff['p_p'] = int(paper[1])
+            payoff['s_p'] = int(paper[2])
         elif line[0] == 'S':
             scissors = line[1].split('|')
-            payoff['s_win'] = int(scissors[0])
-            payoff['s_tie'] = int(scissors[2])
-            payoff['s_lose'] = int(scissors[1])
+            payoff['r_s'] = int(scissors[0])
+            payoff['p_s'] = int(scissors[1])
+            payoff['s_s'] = int(scissors[2])
     f.close()
 
     if not seed:
         seed = randint(0, maxint)
+    rand = Random(seed)
+
+    log = open(log_name, 'w')
