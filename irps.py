@@ -10,10 +10,8 @@ def main():
     cfg = argv[2] if (len(argv) == 3 and argv[1] == '-c') else 'default.cfg'
     g.init(cfg)
 
-    prepare_log()
-    print winner('p', 'r')
-    print winner('s', 'r')
-    print winner('p', 'p')
+    #prepare_log(log)
+
 
 
 
