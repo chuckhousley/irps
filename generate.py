@@ -14,3 +14,11 @@ def generate_strategy_tree():
     letters = 'P', 'O'
     numbers = range(1, g.k+1)
     operators = 'WINNER', 'LOSER', 'OTHER'
+    st = []
+    if g.d == 0:
+        st = [g.rand.choice(letters) + str(g.rand.choice(numbers))]
+        return st
+    while len(st) < g.d:
+        if len(st) == 0:
+            st.append(g.rand.choice(operators))
+            continue
