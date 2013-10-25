@@ -16,9 +16,6 @@ def init(cfg):
     global d
     global seed
     global rand
-    global log
-    global log_name
-    global soln
     global payoff
 
     o_strat = None
@@ -28,9 +25,6 @@ def init(cfg):
     k = None
     d = None
     seed = None
-    log = None
-    log_name = None
-    soln = None
     payoff = dict()
 
     try:
@@ -79,10 +73,6 @@ def init(cfg):
             except ValueError:
                 print 'seed'
                 error()
-        elif line[0] == 'log':
-            log_name = line[1]
-        elif line[0] == 'soln':
-            soln = line[1]
 
         # I'm just going to assume the matrix is correctly formatted
         elif line[0] == 'R':
@@ -105,5 +95,3 @@ def init(cfg):
     if not seed:
         seed = randint(0, maxint)
     rand = Random(seed)
-
-    log = open(log_name, 'w')
