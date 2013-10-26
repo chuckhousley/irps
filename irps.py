@@ -5,7 +5,6 @@ from log import prepare_log
 from generate import *
 from operators import winner
 
-# todo generate strategy trees (POLISH NOTATION UGH THAT SHIT IS WEAK)
 # todo make function to return value from list from string input
 # todo log and solution files
 # todo read in csv file
@@ -21,8 +20,6 @@ def main():
     am = generate_agent_mem()
     st = generate_strategy_tree()
     #prepare_log(log)
-
-
 
 
 if __name__ == '__main__':
