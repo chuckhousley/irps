@@ -19,6 +19,7 @@ def main():
     g.init(cfg)
     am = generate_agent_mem()
     st = generate_strategy_tree()
+    # i make a change
     #prepare_log(log)
 
 
