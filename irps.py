@@ -6,10 +6,6 @@ from log import *
 from generate import *
 from game import play
 
-# todo running games
-# each run = 1000 fitness evals
-# each fitness eval = new gp tree played l times
-
 
 def main():
     tic = time()
