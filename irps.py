@@ -6,7 +6,6 @@ from log import *
 from generate import *
 from game import play
 
-# todo log and solution files
 # todo running games
 # each run = 1000 fitness evals
 # each fitness eval = new gp tree played l times
@@ -19,6 +18,8 @@ def main():
     g.init(cfg)
 
     os = generate_opponent_csv() if g.o_strat != 'last' else None
+    log = open(g.log, 'w')
+    prepare_log(log)
 
     score = -1
     best_st = None
@@ -28,6 +29,7 @@ def main():
         st = generate_strategy_tree()
         new_score = play(am, st, os)
         if new_score > score:
+            log.write('{0}\t{1}\n'.format(i, new_score))
             score = new_score
             best_st = st
 
