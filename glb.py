@@ -10,21 +10,25 @@ def error():
 
 def init(cfg):
     global o_strat
-    global runs
+    global evals
     global l
     global k
     global d
     global seed
     global rand
     global payoff
+    global log
+    global soln
 
     o_strat = None
-    runs = None
+    evals = None
     rand = None
     l = None
     k = None
     d = None
     seed = None
+    log = None
+    soln = None
     payoff = dict()
 
     try:
@@ -45,7 +49,7 @@ def init(cfg):
             o_strat = line[1]
         elif line[0] == 'runs':
             try:
-                runs = int(line[1])
+                evals = int(line[1])
             except ValueError:
                 print 'Runs'
                 error()
@@ -73,6 +77,10 @@ def init(cfg):
             except ValueError:
                 print 'seed'
                 error()
+        elif line[0] == 'log':
+            log = line[1]
+        elif line[0] == 'soln':
+            soln = line[1]
 
         # I'm just going to assume the matrix is correctly formatted
         elif line[0] == 'R':

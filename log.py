@@ -3,6 +3,7 @@ import glb as g
 
 
 def prepare_log(log):
+    log.write('Results Log:\n')
     log.write('k:\t\t{0}\n'.format(g.k))
     log.write('d:\t\t{0}\n'.format(g.d))
     log.write('seed:\t{0}\n'.format(g.seed))
@@ -17,3 +18,9 @@ def prepare_log(log):
     log.write('--|---|---|---|\n')
     log.write('S | {s_r}   {s_p}   {s_s}\n'.format(**g.payoff))
     log.write('--------------\n\n')
+
+
+def write_soln(best_st):
+    soln = open(g.soln, 'w')
+    soln.write(','.join(best_st))
+    soln.close()

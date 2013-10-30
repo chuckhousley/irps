@@ -55,6 +55,7 @@ def generate_opponent_csv():
     l = list(f)
     f.close()
     k = int(l[0])*2
+    os['k'] = k
     for line in l[1:]:
         line = ''.join(line[:-1].split(',')).lower()
         os[line[:k]] = line[k]
