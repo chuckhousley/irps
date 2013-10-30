@@ -33,6 +33,7 @@ def main():
             score = new_score
             best_st = st
 
+    log.close()
     write_soln(best_st)
     toc = time()
     print 'Execution time: %.2f seconds' % (toc-tic)

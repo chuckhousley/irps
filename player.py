@@ -28,4 +28,8 @@ def player_choice(am, st):
 
 
 def operand_result(am, pm):
+    # agent memory is set up as am[x][y] where x is the game that was played x rounds
+    # ago and y is 0 for the player and 1 for the opponent
+    # so to get, for example, the opponents move 3 rounds ago the function would return
+    # am[2][1] (2 instead of 3 because of 0-based arrays)
     return am[int(pm[1])-1][0 if pm[0] == 'P' else 1]

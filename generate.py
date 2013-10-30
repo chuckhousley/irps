@@ -51,12 +51,19 @@ def generate_opponent_csv():
         f = open(g.o_strat, 'r')
     except IOError:
         print "failed to open", g.o_strat
+        exit()
     os = {}
     l = list(f)
     f.close()
     k = int(l[0])*2
-    os['k'] = k
+    os['k'] = k  # stores k in the dict for easy access without making it a global
     for line in l[1:]:
+        # this loop:
+        #   1. splits each line of the csv file on the commas into a python list
+        #   2. joins the list back together into a string with nothing separating the values
+        #   3. makes the string all lowercase for standardization purposes
+        #   4. hashes the first (k*2)-1 elements so that the kth element (the opponent's choice) can be accessed
+        #      by feeding in a string of each of the player's and opponent's previous moves into the dict
         line = ''.join(line[:-1].split(',')).lower()
         os[line[:k]] = line[k]
     return os
