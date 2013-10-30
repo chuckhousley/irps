@@ -7,8 +7,8 @@ def opponent_choice(am, os=None):
     return _last_winner(am) if g.o_strat == 'last' else _csv(ip, os)
 
 
-def _last_winner(ip):
-    return winner(ip[0][0], ip[0][1])
+def _last_winner(am):
+    return winner(am[0][0], am[0][1])
 
 
 def _csv(ip, os):

@@ -3,7 +3,7 @@ import glb as g
 
 
 def generate_agent_mem():
-    rps = 'R', 'P', 'S'
+    rps = 'r', 'p', 's'
     am = []
     for i in range(g.k):
         am.append((g.rand.choice(rps), g.rand.choice(rps)))
@@ -44,3 +44,19 @@ def generate_strategy_tree():
                     tree_stack.append((operand(), current_d))   # since no operators depend on order
                     tree_stack.append((operator(), current_d))  # these can be added safely in any order
         return st
+
+
+def generate_opponent_csv():
+    try:
+        f = open(g.o_strat, 'r')
+    except IOError:
+        print "failed to open", g.o_strat
+    os = {}
+    l = list(f)
+    f.close()
+    k = int(l[0])*2
+    for line in l[1:]:
+        line = ''.join(line[:-1].split(',')).lower()
+        os[line[:k]] = line[k]
+    return os
+
