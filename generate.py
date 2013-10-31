@@ -14,13 +14,14 @@ def generate_strategy_tree():
     players = 'P', 'O'
     numbers = range(1, g.k+1)
     operators = 'WINNER', 'LOSER', 'OTHER'
+    d = g.rand.choice(range(0, g.d+1))
 
     # lambda functions for randomly generating operators and operands
     # included primarily for readability and less writing
     operator = lambda: g.rand.choice(operators)
     operand = lambda: g.rand.choice(players) + str(g.rand.choice(numbers))
 
-    if g.d == 0:
+    if d == 0:
         return [operand()]  # if d = 0 then tree is single terminal node
     else:
         st = []
@@ -33,7 +34,7 @@ def generate_strategy_tree():
                 continue                     # the loop continues since nothing is added underneath it
 
             current_d = element[1] + 1
-            if current_d == g.d:  # adds terminal nodes to the max depth of the tree
+            if current_d == d:  # adds terminal nodes to the max depth of the tree
                 tree_stack.append((operand(), current_d))
                 tree_stack.append((operand(), current_d))
             else:
