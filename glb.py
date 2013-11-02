@@ -10,6 +10,7 @@ def error():
 
 def init(cfg):
     global o_strat
+    global runs
     global evals
     global l
     global k
@@ -21,6 +22,7 @@ def init(cfg):
     global soln
 
     o_strat = None
+    runs = None
     evals = None
     rand = None
     l = None
@@ -49,9 +51,15 @@ def init(cfg):
             o_strat = line[1]
         elif line[0] == 'runs':
             try:
-                evals = int(line[1])
+                runs = int(line[1])
             except ValueError:
                 print 'Runs'
+                error()
+        elif line[0] == 'evals':
+            try:
+                evals = int(line[1])
+            except ValueError:
+                print 'Evals'
                 error()
         elif line[0] == 'l':
             try:

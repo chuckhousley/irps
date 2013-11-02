@@ -19,15 +19,16 @@ def main():
 
     score = -1
     best_st = None
-
-    for i in range(g.evals):
-        am = generate_agent_mem()
-        st = generate_strategy_tree()
-        new_score = play(am, st, os)
-        if new_score > score:
-            log.write('{0}\t{1}\n'.format(i, new_score))
-            score = new_score
-            best_st = st
+    for i in range(g.runs):
+        log.write('Run {0}:\n'.format(i+1))
+        for j in range(g.evals):
+            am = generate_agent_mem()
+            st = generate_strategy_tree()
+            new_score = play(am, st, os)
+            if new_score > score:
+                log.write('{0}\t{1}\n'.format(j, new_score))
+                score = new_score
+                best_st = st
 
     log.close()
     write_soln(best_st)
