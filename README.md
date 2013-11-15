@@ -1,4 +1,4 @@
-# Iterated Rock Paper Scissors #
+# Iterative Rock Paper Scissors #
 ## MS&T CS348 FS2013 Assignment Series 2 ##
 - - -
 To run with default.cfg, execute:
