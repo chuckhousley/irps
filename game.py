@@ -5,7 +5,7 @@ from opponent import opponent_choice
 from operators import winner
 
 
-def play(am, st, os):
+def play_2a(am, st, os):
     player_score = 0
     for i in range(g.l):
         player = player_choice(am, st)

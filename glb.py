@@ -10,23 +10,45 @@ def error():
 
 def init(cfg):
     global o_strat
-    global evals
+    global runs
     global l
     global k
     global d
     global seed
     global rand
     global payoff
+
+    global parent
+    global survival
+    global termination
+    global n
+    global evals
+    global mu
+    global lam
+    global kt
+    global p
+
     global log
     global soln
 
     o_strat = None
-    evals = None
+    runs = None
     rand = None
     l = None
     k = None
     d = None
     seed = None
+
+    parent = None
+    survival = None
+    termination = None
+    n = None
+    evals = None
+    mu = None
+    lam = None
+    kt = None
+    p = None
+
     log = None
     soln = None
     payoff = dict()
@@ -49,7 +71,7 @@ def init(cfg):
             o_strat = line[1]
         elif line[0] == 'runs':
             try:
-                evals = int(line[1])
+                runs = int(line[1])
             except ValueError:
                 print 'Runs'
                 error()
@@ -77,6 +99,49 @@ def init(cfg):
             except ValueError:
                 print 'seed'
                 error()
+        elif line[0] == 'parent':
+            parent = line[1]
+        elif line[0] == 'termination':
+            termination = line[1]
+        elif line[0] == 'survival':
+            survival = line[1]
+        elif line[0] == 'n':
+            try:
+                n = int(line[1])
+            except ValueError:
+                print 'n'
+                error()
+        elif line[0] == 'evals':
+            try:
+                evals = int(line[1])
+            except ValueError:
+                print 'evals'
+                error()
+        elif line[0] == 'mu':
+            try:
+                mu = int(line[1])
+            except ValueError:
+                print 'mu'
+                error()
+        elif line[0] == 'lambda':
+            try:
+                lam = int(line[1])
+            except ValueError:
+                print 'lambda'
+                error()
+        elif line[0] == 'kt':
+            try:
+                kt = int(line[1])
+            except ValueError:
+                print 'kt'
+                error()
+        elif line[0] == 'p':
+            try:
+                p = float(line[1])
+            except ValueError:
+                print 'p'
+                error()
+
         elif line[0] == 'log':
             log = line[1]
         elif line[0] == 'soln':
@@ -103,3 +168,7 @@ def init(cfg):
     if not seed:
         seed = randint(0, maxint)
     rand = Random(seed)
+
+    if l < 3*k:
+        print "l must be >= 3k, please update the .cfg file"
+        exit()

@@ -66,6 +66,6 @@ def generate_opponent_csv():
         #   4. hashes the first (k*2)-1 elements so that the kth element (the opponent's choice) can be accessed
         #      by feeding in a string of each of the player's and opponent's previous moves into the dict
         line = ''.join(line[:-1].split(',')).lower()
-        os[line[:k]] = line[k]
+        os[line[:k]] = line[-1]
     return os
 
