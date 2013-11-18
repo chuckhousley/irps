@@ -2,6 +2,7 @@ __author__ = 'Chuck'
 import glb as g
 from gpTree import *
 from generate import *
+from game import play_2b
 from sys import maxint
 
 

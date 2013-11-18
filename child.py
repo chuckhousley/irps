@@ -1,6 +1,9 @@
 __author__ = 'Chuck'
 import glb as g
 from generate import *
+from gpTree import *
+from game import play_2b
+from parent import parents
 
 
 def subtree(tree):
@@ -31,7 +34,7 @@ def subtree(tree):
     return root, end-1
 
 
-def create_children():
+def create_children(survivors):
     os = generate_opponent_csv() if g.o_strat != 'last' else None
     children = []
     for nc in range(g.lam):

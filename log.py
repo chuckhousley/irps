@@ -1,5 +1,6 @@
 __author__ = 'Chuck'
 import glb as g
+from sys import maxint
 
 
 def prepare_log(log):
@@ -18,6 +19,18 @@ def prepare_log(log):
     log.write('--|---|---|---|\n')
     log.write('S | {s_r}   {s_p}   {s_s}\n'.format(**g.payoff))
     log.write('--------------\n\n')
+
+
+def write_log(log, survivors, evals):
+    average = 0
+    best = -maxint
+    for s in survivors:
+        average += s.fitness
+        if s.fitness > best:
+            best = s.fitness
+    average /= len(survivors)
+
+    log.write(str(evals) + '\t' + str(average) + '\t' + str(best) + '\n')
 
 
 def write_soln(best_st):
