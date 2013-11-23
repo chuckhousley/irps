@@ -4,6 +4,7 @@ from gpTree import *
 from log import *
 from generate import *
 from game import *
+from survival import *
 from parent import create_parents
 from child import create_children
 from sys import maxint
@@ -54,8 +55,7 @@ def assignment_2b():
             children = create_children(survivors)
             evals += g.lam
 
-            for c in children:  # mu+lambda
-                survivors.append(c)
+            survivors = strategy(survivors, children)
 
             for s in survivors:
                 if len(s.tree) > (2**(g.d+1) - 1):
@@ -108,3 +108,8 @@ def assignment_2b():
             write_log(log, survivors, evals)
 
     write_soln(best_tree)
+
+
+def assignment_2c():
+    survivors = create_parents()
+

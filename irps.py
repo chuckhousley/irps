@@ -12,7 +12,8 @@ def main():
     g.init(cfg)
 
     #assignment_2a()
-    assignment_2b()
+    #assignment_2b()
+    assignment_2c()
 
     toc = time()
     print 'Execution time: %.2f seconds' % (toc-tic)

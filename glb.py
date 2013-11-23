@@ -28,6 +28,9 @@ def init(cfg):
     global kt
     global p
 
+    global strategy
+    global percent
+
     global log
     global soln
 
@@ -48,6 +51,9 @@ def init(cfg):
     lam = None
     kt = None
     p = None
+
+    strategy = None
+    percent = None
 
     log = None
     soln = None
@@ -141,6 +147,16 @@ def init(cfg):
             except ValueError:
                 print 'p'
                 error()
+
+        elif line[0] == 'strategy':
+            strategy = line[1]
+        elif line[0] == 'percent':
+            try:
+                percent = float(line[1])/100
+            except ValueError:
+                print 'percent'
+                error()
+
 
         elif line[0] == 'log':
             log = line[1]
