@@ -30,7 +30,9 @@ def write_log(log, survivors, evals):
             best = s.fitness
     average /= len(survivors)
 
-    log.write(str(evals) + '\t' + str(average) + '\t' + str(best) + '\n')
+    avg_str = '%.2f' % average
+    best_str = '%.2f' % best
+    log.write("{0}\t{1}\t{2}\n".format(evals, avg_str, best_str))
 
 
 def write_soln(best_st):

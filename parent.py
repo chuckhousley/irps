@@ -2,8 +2,10 @@ __author__ = 'Chuck'
 import glb as g
 from gpTree import *
 from generate import *
-from game import play_2b
+from game import play_2b, play_2c
 from sys import maxint
+from log import write_log
+from math import ceil
 
 
 def parents(survivors):
@@ -49,7 +51,7 @@ def _os(survivors):
     return g.rand.choice(patrician), g.rand.choice(plebeian)
 
 
-def create_parents():
+def create_parents_2b():
     os = generate_opponent_csv() if g.o_strat != 'last' else None
     survivors = []
     for initial_parents in range(g.mu):
@@ -58,3 +60,25 @@ def create_parents():
         new_parent.fitness = play_2b(am, new_parent.tree, os)
         survivors.append(new_parent)
     return survivors
+
+
+def create_parents_2c(log):
+    survivors = []
+    evals = 0
+    for initial_parents in range(g.mu):
+        survivors.append(gpTree(generate_strategy_tree()))
+
+    for ip in survivors:
+        temp = list(survivors)  # creates a copy of the survivor list
+        temp.remove(ip)         # and removes the current item so it doesn't battle itself
+
+        fitness = 0
+        num_opponents = int(ceil(len(temp)*g.percent))
+        for op in g.rand.sample(temp, num_opponents):
+            am = generate_agent_mem()
+            fitness += play_2c(am, ip.tree, op.tree)
+            evals += 1
+        ip.fitness = float(fitness)/num_opponents  # assigns fitness to be average fitness over all opponents
+
+    write_log(log, survivors, evals)
+    return survivors, evals

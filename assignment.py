@@ -5,8 +5,8 @@ from log import *
 from generate import *
 from game import *
 from survival import *
-from parent import create_parents
-from child import create_children
+from parent import create_parents_2c
+from child import create_children_2b, create_children_2c
 from sys import maxint
 
 
@@ -44,7 +44,7 @@ def assignment_2b():
         log.write("Run {0}\n".format(i+1))
         print "Starting Run {0}\n".format(i+1)
         # create first mu parents
-        survivors = create_parents()
+        survivors = create_parents_2b()
 
         previous_max = -maxint
         termination_count = 0
@@ -52,41 +52,14 @@ def assignment_2b():
         write_log(log, survivors, evals)
 
         while evals < g.evals:
-            children = create_children(survivors)
+            children = create_children_2b(survivors)
             evals += g.lam
 
             survivors = strategy(survivors, children)
 
-            for s in survivors:
-                if len(s.tree) > (2**(g.d+1) - 1):
-                    s.fitness *= g.p
+            parsimony(survivors)
 
-            if g.survival == 't':
-                while len(survivors) > g.mu:
-                    lowest = maxint
-                    truncated_tree = -1
-                    for s in survivors:
-                        if s.fitness < lowest:
-                            lowest = s.fitness
-                            truncated_tree = s
-                    survivors.remove(truncated_tree)
-
-            elif g.survival == 'k':
-                new_survivors = []
-                while len(new_survivors) < g.mu:
-                    tournament = g.rand.sample(survivors, g.kt)
-                    highest_score = -maxint
-                    winning_tree = None
-                    for t in tournament:
-                        if t.fitness > highest_score:
-                            highest_score = t.fitness
-                            winning_tree = t
-                    new_survivors.append(winning_tree)
-                    survivors.remove(winning_tree)
-                survivors = new_survivors
-
-            else:
-                print 'invalid termination choice, please update .cfg file'
+            remove_the_weak(survivors)
 
             current_max = -maxint
             for s in survivors:
@@ -111,5 +84,48 @@ def assignment_2b():
 
 
 def assignment_2c():
-    survivors = create_parents()
+    # initializing functions
+    log = open(g.log, 'w')
+    prepare_log(log)
 
+    best_fitness = -maxint
+    best_tree = None
+
+    for i in range(g.runs):
+        log.write("Run {0}\n".format(i+1))
+        print "Starting Run {0}\n".format(i+1)
+        survivors, evals = create_parents_2c(log)
+
+        previous_max = -maxint
+        termination_count = 0
+
+        while evals < g.evals:
+            children, children_evals = create_children_2c(survivors)
+            evals += children_evals
+
+            survivors = strategy(survivors, children)
+
+            parsimony(survivors)
+
+            remove_the_weak(survivors)
+
+            current_max = -maxint
+            for s in survivors:
+                if s.fitness > current_max:
+                    current_max = s.fitness
+            if current_max == previous_max:
+                termination_count += 1
+            else:
+                previous_max = current_max
+                termination_count = 0
+            if termination_count == g.n and g.termination == 'nc':
+                break
+
+            for s in survivors:
+                if s.fitness > best_fitness:
+                    best_fitness = s.fitness
+                    best_tree = s.tree
+
+            write_log(log, survivors, evals)
+
+    # Play the best tree against the opponent strategies
