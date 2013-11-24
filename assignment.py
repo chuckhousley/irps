@@ -46,7 +46,7 @@ def assignment_2b():
         # create first mu parents
         survivors = create_parents_2b()
 
-        previous_max = -maxint
+        previous_avg = -maxint
         termination_count = 0
         evals = g.mu
         write_log(log, survivors, evals)
@@ -61,17 +61,15 @@ def assignment_2b():
 
             remove_the_weak(survivors)
 
-            current_max = -maxint
-            for s in survivors:
-                if s.fitness > current_max:
-                    current_max = s.fitness
-            if current_max == previous_max:
-                termination_count += 1
-            else:
-                previous_max = current_max
-                termination_count = 0
-            if termination_count == g.n and g.termination == 'nc':
-                break
+            if g.termination == 'nc':
+                current_avg = average_fit(survivors)
+                if current_avg == previous_avg:
+                    termination_count += 1
+                else:
+                    previous_avg = current_avg
+                    termination_count = 0
+                if termination_count == g.n:
+                    break
 
             for s in survivors:
                 if s.fitness > best_fitness:
@@ -96,8 +94,10 @@ def assignment_2c():
         print "Starting Run {0}\n".format(i+1)
         survivors, evals = create_parents_2c(log)
 
-        previous_max = -maxint
+        previous_avg = -maxint
         termination_count = 0
+
+        hall_of_fame = []
 
         while evals < g.evals:
             children, children_evals = create_children_2c(survivors)
@@ -109,14 +109,15 @@ def assignment_2c():
 
             remove_the_weak(survivors)
 
-            current_max = -maxint
-            for s in survivors:
-                if s.fitness > current_max:
-                    current_max = s.fitness
-            if current_max == previous_max:
+            update_hof(survivors, hall_of_fame)
+
+            current_avg = average_fit(survivors)
+            if current_avg < previous_avg:  # cycling detected
+                use_hof(survivors, hall_of_fame)
+            elif current_avg == previous_avg:
                 termination_count += 1
             else:
-                previous_max = current_max
+                previous_avg = current_avg
                 termination_count = 0
             if termination_count == g.n and g.termination == 'nc':
                 break
@@ -129,3 +130,12 @@ def assignment_2c():
             write_log(log, survivors, evals)
 
     # Play the best tree against the opponent strategies
+    log.write('\nAbsolute Fitness\n')
+    am = generate_agent_mem()
+    os = generate_opponent_csv() if g.o_strat != 'last' else None
+    abs_fitness = play_2b(am, best_tree, os)
+
+    log.write(str(abs_fitness))
+    log.close()
+
+    write_soln(best_tree)

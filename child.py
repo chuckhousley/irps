@@ -48,7 +48,7 @@ def create_children_2b(survivors):
             parent1, parent2 = parent2, parent1
 
         # small chance for mutation
-        if g.rand.random() < 0.01:  # replaces parent2 with a fresh gp tree
+        if g.rand.random() < g.mutation:  # replaces parent2 with a fresh gp tree
             parent2 = gpTree(generate_strategy_tree())  # and a subtree will be generated from this new tree
 
         new_child = gpTree(list(parent1.tree))

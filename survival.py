@@ -17,10 +17,16 @@ def strategy(survivors, children):
 
 
 def parsimony(survivors):
-    for s in survivors:
-        if len(s.tree) > (2**(g.d+1) - 1):
-            s.fitness *= g.p  # reduces fitness if tree size is bigger than size of fullest tree allowed
+    for s in survivors:  # parsimony is applied regardless of size of tree
+        s.fitness = float(s.fitness) - len(s.tree)*g.p
 
+
+def average_fit(survivors):
+    average = 0
+    for s in survivors:
+        average += s.fitness
+    average /= len(survivors)
+    return average
 
 def remove_the_weak(survivors):
     if g.survival == 't':
@@ -52,3 +58,31 @@ def remove_the_weak(survivors):
     else:
         print 'invalid termination choice, please update .cfg file'
         exit()
+
+
+# EXTRA CREDIT FUNCTIONS #
+def update_hof(survivors, hall_of_fame):
+    highest_fitness = -maxint
+    new_champ = None
+    for s in survivors:
+        if s.fitness > highest_fitness:
+            highest_fitness = s.fitness
+            new_champ = s
+
+    if len(hall_of_fame) == g.lam:
+        hall_of_fame.pop(0)
+
+    hall_of_fame.append(new_champ)
+
+
+def use_hof(survivors, hall_of_fame):
+    lowest_fitness = maxint
+    new_chump = None
+    for champ in hall_of_fame:
+        for s in survivors:
+            if s.fitness < lowest_fitness:
+                highest_fitness = s.fitness
+                new_chump = s
+        if champ.fitness > new_chump.fitness:
+            survivors.remove(new_chump)
+            survivors.append(champ)

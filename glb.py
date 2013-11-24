@@ -27,6 +27,7 @@ def init(cfg):
     global lam
     global kt
     global p
+    global mutation
 
     global strategy
     global percent
@@ -51,6 +52,7 @@ def init(cfg):
     lam = None
     kt = None
     p = None
+    mutation = None
 
     strategy = None
     percent = None
@@ -156,7 +158,12 @@ def init(cfg):
             except ValueError:
                 print 'percent'
                 error()
-
+        elif line[0] == 'mutation':
+            try:
+                mutation = float(line[1])
+            except ValueError:
+                print 'mutation'
+                error()
 
         elif line[0] == 'log':
             log = line[1]

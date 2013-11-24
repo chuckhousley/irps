@@ -15,7 +15,7 @@ def parents(survivors):
         return _os(survivors)
 
 
-def _fps(survivors):
+def _fps(survivors):  # fitness proportional search
     selection = []
     for i in range(len(survivors)):
         amount_to_add = survivors[i].fitness if survivors[i].fitness > 0 else 1
@@ -31,14 +31,14 @@ def _fps(survivors):
     return survivors[parent1], survivors[parent2]
 
 
-def _os(survivors):
+def _os(survivors):  # over-selection
     plebeian = list(survivors)
     patrician = []
 
     higher = int(round(len(plebeian)*0.2))  # size of top 20% of survivors
-    higher = higher if higher > 0 else 1 # makes sure at least 1 element is in patrician list
+    higher = higher if higher > 0 else 1  # makes sure at least 1 element is in patrician list
 
-    while len(patrician) < higher:
+    while len(patrician) <= higher:
         high_score = -maxint
         best_element = -1
         for j in range(len(plebeian)):
