@@ -90,7 +90,7 @@ def assignment_2c():
     best_tree = None
 
     for i in range(g.runs):
-        log.write("Run {0}\n".format(i+1))
+        log.write("\nRun {0}\n".format(i+1))
         print "Starting Run {0}\n".format(i+1)
         survivors, evals = create_parents_2c(log)
 
@@ -107,7 +107,8 @@ def assignment_2c():
 
             parsimony(survivors)
 
-            remove_the_weak(survivors)
+            survivors = remove_the_weak(survivors)
+            assert len(survivors) == g.mu
 
             update_hof(survivors, hall_of_fame)
 

@@ -12,7 +12,6 @@ def strategy(survivors, children):
     else:
         print "strategy not recognized, please update .cfg file"
         exit()  # I'm exiting in a library function AND YOU CAN'T STOP ME
-
     return survivors
 
 
@@ -28,6 +27,7 @@ def average_fit(survivors):
     average /= len(survivors)
     return average
 
+
 def remove_the_weak(survivors):
     if g.survival == 't':
         while len(survivors) > g.mu:
@@ -38,9 +38,10 @@ def remove_the_weak(survivors):
                     lowest = s.fitness
                     truncated_tree = s
             survivors.remove(truncated_tree)
-        return
+        return survivors
 
     elif g.survival == 'k':
+        assert len(survivors) > g.mu
         new_survivors = []
         while len(new_survivors) < g.mu:
             tournament = g.rand.sample(survivors, g.kt)
@@ -52,8 +53,7 @@ def remove_the_weak(survivors):
                     winning_tree = t
             new_survivors.append(winning_tree)
             survivors.remove(winning_tree)
-        survivors = new_survivors
-        return
+        return new_survivors
 
     else:
         print 'invalid termination choice, please update .cfg file'
@@ -79,10 +79,10 @@ def use_hof(survivors, hall_of_fame):
     lowest_fitness = maxint
     new_chump = None
     for champ in hall_of_fame:
-        for s in survivors:
-            if s.fitness < lowest_fitness:
-                highest_fitness = s.fitness
-                new_chump = s
-        if champ.fitness > new_chump.fitness:
-            survivors.remove(new_chump)
+        for i in range(len(survivors)):
+            if survivors[i].fitness < lowest_fitness:
+                lowest_fitness = survivors[i].fitness
+                new_chump = i
+        if new_chump and champ.fitness > survivors[new_chump].fitness:
+            survivors.pop(new_chump)
             survivors.append(champ)
