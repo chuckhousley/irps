@@ -1,9 +1,19 @@
 __author__ = 'Chuck'
 import glb as g
+import rate as r
 from player import player_choice
 from opponent import opponent_choice
 from operators import winner, score
 from generate import generate_agent_mem
+
+
+def update_rate(p, o):
+    if p == o:
+        r.d += 1
+    elif (p == 'p' and o == 'r') or (p == 'r' and o == 's') or (p == 's' and o == 'p'):
+        r.w += 1
+    else:
+        r.l += 1
 
 
 def play_2a(am, st, os):
@@ -24,6 +34,7 @@ def play_2b(am, st, os):
     for i in range(2*g.k):
         player = player_choice(am, st)
         opponent = opponent_choice(am, os)
+        update_rate(player, opponent)
         am.pop()
         am.insert(0, (player, opponent))
 
@@ -31,6 +42,7 @@ def play_2b(am, st, os):
     for i in range(g.l - 2*g.k):
         player = player_choice(am, st)
         opponent = opponent_choice(am, os)
+        update_rate(player, opponent)
         player_score += score(player, opponent)
         am.pop()
         am.insert(0, (player, opponent))
@@ -44,6 +56,7 @@ def play_2c(am, st1, st2):  # plays coevolutionary games
     for i in range(2*g.k):
         player = player_choice(am, st1)
         opponent = player_choice(am, st2)
+        update_rate(player, opponent)
         am.pop()
         am.insert(0, (player, opponent))
 
@@ -51,6 +64,7 @@ def play_2c(am, st1, st2):  # plays coevolutionary games
     for i in range(g.l - 2*g.k):
         player = player_choice(am, st1)
         opponent = player_choice(am, st2)
+        update_rate(player, opponent)
         fitness += score(player, opponent)
         am.pop()
         am.insert(0, (player, opponent))
