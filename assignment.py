@@ -5,7 +5,7 @@ from log import *
 from generate import *
 from game import *
 from survival import *
-from parent import create_parents_2c
+from parent import create_parents_2b, create_parents_2c
 from child import create_children_2b, create_children_2c
 from sys import maxint
 
@@ -59,7 +59,7 @@ def assignment_2b():
 
             parsimony(survivors)
 
-            remove_the_weak(survivors)
+            survivors = remove_the_weak(survivors)
 
             if g.termination == 'nc':
                 current_avg = average_fit(survivors)

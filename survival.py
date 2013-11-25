@@ -41,7 +41,6 @@ def remove_the_weak(survivors):
         return survivors
 
     elif g.survival == 'k':
-        assert len(survivors) > g.mu
         new_survivors = []
         while len(new_survivors) < g.mu:
             tournament = g.rand.sample(survivors, g.kt)

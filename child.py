@@ -64,6 +64,7 @@ def create_children_2b(survivors):
 
         # plays games to generate new child's fitness
         am = generate_agent_mem()
+        #new_child.fitness = play_2c(am, new_child.tree, generate_strategy_tree())
         new_child.fitness = play_2b(am, new_child.tree, os)
         children.append(new_child)
     return children
@@ -108,6 +109,7 @@ def create_children_2c(survivors):
         for op in g.rand.sample(population, num_opponents):
             am = generate_agent_mem()
             fitness += play_2c(am, child.tree, op.tree)
+            #fitness += play_2c(am, child.tree, generate_strategy_tree())
             evals += 1
         child.fitness = float(fitness)/num_opponents  # assigns fitness to be average fitness over all opponents
 

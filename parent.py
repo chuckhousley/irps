@@ -57,6 +57,7 @@ def create_parents_2b():
     for initial_parents in range(g.mu):
         new_parent = gpTree(generate_strategy_tree())
         am = generate_agent_mem()
+        #new_parent.fitness = play_2c(am, new_parent.tree, generate_strategy_tree())
         new_parent.fitness = play_2b(am, new_parent.tree, os)
         survivors.append(new_parent)
     return survivors
@@ -76,6 +77,7 @@ def create_parents_2c(log):
         num_opponents = int(ceil(len(temp)*g.percent))
         for op in g.rand.sample(temp, num_opponents):
             am = generate_agent_mem()
+            #fitness += play_2c(am, ip.tree, generate_strategy_tree())
             fitness += play_2c(am, ip.tree, op.tree)
             evals += 1
         ip.fitness = float(fitness)/num_opponents  # assigns fitness to be average fitness over all opponents
